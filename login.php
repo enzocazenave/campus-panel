@@ -8,9 +8,9 @@
         if (empty($username) || empty($password)) {
             $error = "Por favor completa todos los campos";
         } else {
-            require "databases/usersDB.php";
+            require "databases/users_db.php";
 
-            $statement = $usersDB->prepare("SELECT * FROM users WHERE username = :username LIMIT 1");
+            $statement = $users_db->prepare("SELECT * FROM users WHERE username = :username LIMIT 1");
             $statement->bindParam(":username", $username);
             $statement->execute();
 

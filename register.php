@@ -8,16 +8,16 @@
         if (empty($username) || empty($password)) {
             $error = "Please fill all the fields.";
         } else {
-            require "databases/usersDB.php";
+            require "databases/users_db.php";
 
-            $statement = $usersDB->prepare("SELECT * FROM users WHERE username = :username LIMIT 1");
+            $statement = $users_db->prepare("SELECT * FROM users WHERE username = :username LIMIT 1");
             $statement->bindParam(":username", $username);
             $statement->execute();
 
             if ($statement->rowCount() > 0) {
                 $error = "El usuario ya existe";
             } else {
-                $usersDB
+                $users_db
                     ->prepare("INSERT INTO users (username, password) VALUES(:username, :password)")
                     ->execute([
                         ":username" => $username,
@@ -25,7 +25,7 @@
                     ]);
 
 
-                $statement = $usersDB->prepare("SELECT * FROM users WHERE username = :username LIMIT 1");
+                $statement = $users_db->prepare("SELECT * FROM users WHERE username = :username LIMIT 1");
                 $statement->bindParam(":username", $username);
                 $statement->execute();
                 $user = $statement->fetch(PDO::FETCH_ASSOC);

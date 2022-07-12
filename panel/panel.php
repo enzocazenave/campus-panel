@@ -5,6 +5,16 @@
         header("Location: ../index.html");
         return;
     }
+
+    require "../databases/users_db.php";
+
+    $id = $_SESSION["user"]["id"];
+
+    $statement = $users_db->prepare("SELECT * FROM users_info WHERE id = :id LIMIT 1");
+    $statement->bindParam(":id", $id);
+    $statement->execute();
+
+    $user = $statement->fetch(PDO::FETCH_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -23,13 +33,14 @@
     <div class="card">
         <i class="fas fa-user-circle"></i>
         <div class="card__credentials">
-            <p>NOMBRE: <a>Enzo</a></p>
-            <p>APELLIDO: <a>Cazenave</a></p>
-            <p>UNIVERSIDAD: <a>UADE</a></p>
-            <p>N DE LEGAJO: <a>116321</a></p>
-            <p>CARERA: <a>Ingeniería en informática</a></p>
-            <p>MATERIAS: <a>4/64</a></p>
+            <p>NOMBRE: <a><?= $user["name"] ?></a></p>
+            <p>APELLIDO: <a><?= $user["surname"] ?></a></p>
+            <p>UNIVERSIDAD: <a><?= $user["university"] ?></a></p>
+            <p>N DE LEGAJO: <a><?= $user["file_number"] ?></a></p>
+            <p>CARERA: <a><?= $user["career"] ?></a></p>
+            <p>MATERIAS: <a><?= $user["subjects"] ?>/<?= $user["total_subjects"] ?></a></p>
         </div>
+        
         <a id="card__buttons" href="logout.php">Cerrar sesión</a>
         <a id="card__buttons" href="edit_info.html">Editar informacion</a>
         <a id="card__buttons" href="subjects.html">Ver materias</a>
