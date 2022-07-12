@@ -1,3 +1,12 @@
+<?php
+    session_start();
+
+    if (!isset($_SESSION["user"])) {
+        header("Location: ../index.html");
+        return;
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,9 +30,9 @@
             <p>CARERA: <a>Ingeniería en informática</a></p>
             <p>MATERIAS: <a>4/64</a></p>
         </div>
+        <a id="card__buttons" href="logout.php">Cerrar sesión</a>
         <a id="card__buttons" href="edit_info.html">Editar informacion</a>
         <a id="card__buttons" href="subjects.html">Ver materias</a>
-
     </div>
 </body>
 </html>
