@@ -31,10 +31,13 @@
                 $user = $statement->fetch(PDO::FETCH_ASSOC);
 
                 session_start();
+
                 unset($user["password"]);
                 $_SESSION["user"] = $user;
                 
-                header("Location: panel/panel.php");
+                $id = $_SESSION["user"]["id"];
+
+                header("Location: panel/add_info.php?id=$id");
             }
         }
     }
